@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
-
-    <!-- Bootstrap -->
+    <title>Control Panel</title>
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
       <link href="static/css/user.css" rel="stylesheet">
   </head>
@@ -15,7 +13,6 @@
    <div class="col-xs-9">
        <div class="panel panel-default">
   <div class="panel-body">
-      {{ nginx }}
     <table class="table">
         <tr>
             <th>Enable</th>
@@ -24,28 +21,34 @@
             <th>Control</th>
         </tr>
         <tbody>
+        {% for daemon in daemons %}
+        <!-- Если статус запущен, то цвет полня зеленый -->
+        {% if daemons.get(daemon) == 0 %}
         <tr class="success">
+        {% else %}
+            <tr class="danger">
+        {% endif %}
             <th scope="row">
                 <input type="checkbox">
-            </th> <td>Nginx</td>
-            <td>Run</td>
+            </th> <td>{{ daemon }}</td>
+        <!-- Статус из словаря signal -->
+            <td>{{ signal.get(daemons.get(daemon)) }}</td>
             <td>
-                <button type="button" class="btn btn-success btn-xs">Run</button>
-                <button type="button" class="btn btn-primary btn-xs">Reboot</button>
-                <button type="button" class="btn btn-danger btn-xs">Stop</button>
+         <!-- Кнопки активны взависимости от статуса службы -->
+            {% if daemons.get(daemon) == 0 %}
+                <a href="/start?daemon={{ daemon }}" type="button" class="btn btn-success btn-xs" disabled="disabled">Run</a>
+            {% else %}
+                <a href="/start?daemon={{ daemon }}" type="button" class="btn btn-success btn-xs">Run</a>
+            {% endif %}
+                <a href="/restart?daemon={{ daemon }}" type="button" class="btn btn-primary btn-xs">Reboot</a>
+            {% if daemons.get(daemon) == 3 %}
+                <a href="/stop?daemon={{ daemon }}" type="button" class="btn btn-danger btn-xs" disabled="disabled">Stop</a>
+            {% else %}
+                <a href="/stop?daemon={{ daemon }}" type="button" class="btn btn-danger btn-xs">Stop</a>
+            {% endif %}
             </td>
         </tr>
-        <tr class="danger">
-            <th scope="row">
-                <input type="checkbox">
-            </th> <td>MySQL</td>
-            <td>Stop</td>
-            <td>
-                <button type="button" class="btn btn-success btn-xs">Run</button>
-                <button type="button" class="btn btn-primary btn-xs" disabled="disabled">Reboot</button>
-                <button type="button" class="btn btn-danger btn-xs" disabled="disabled">Stop</button>
-            </td>
-        </tr>
+        {% endfor %}
         </tbody>
     </table>
   </div>
