@@ -5,5 +5,5 @@
 
 # Install
 1. pip install requirements.txt
-2. python mail.py
+2. python main.py
 3. Go to http://127.0.0.1:8080
