@@ -1,7 +1,7 @@
 # Panels
 Панель управления службами Linux.
 
-<img src="https://habrastorage.org/files/d38/c81/52e/d38c8152e9514d33a944abdb403cfe0e.jpeg"/>
+<img src="https://habrastorage.org/files/3f5/f95/1b2/3f5f951b25374f81a9d8288c33cf440b.gif"/>
 
 # Install
 1. pip install requirements.txt
